@@ -3,12 +3,17 @@ A project to use publicly available data to study the interaction between fossil
 
 ## Table of Contents
 * [Main Questions](#mainquestions)
+* [Visualizations](#visualizations)
 * [Data Sources](#datasources)
 
 ## Main Questions
 * Is there a correlation between fossil fuel production and CO2 emissions? This could be gasoline only, all crude oil, or all fossil fuels. 
 * Is there a correlation between CO2 emissions and global temperatures?
 * Did COVID have an impact on fossil fuel production? What can this tell us about fossil fuel consumption and possibly its impact on the climate?
+
+## Visualizations
+* What visualizations will we ideally use to tell a story with these data?
+* This will need to be in a dashboard. 
 
 ## Data Sources
 * Scripps CO2 Program - AKA The Keeling Curve
