@@ -20,3 +20,6 @@ A project to use publicly available data to study the interaction between fossil
 * CDC Covid Cases and Deaths by State
   * https://data.cdc.gov/Case-Surveillance/United-States-COVID-19-Cases-and-Deaths-by-State-o/9mfq-cb36/data
   * Quality: these data rely on state health department reporting, so there could be variation in quality among the states. It might be worth looking at one or two states or even going to state health departments for data.  
+* IPCC
+  * temperature vs cumulative CO2 emissions since 1850 - Figure SPM.10 - data located in /data/IPCC/Figure_SPM10_Near_linear_relationship_btwn_cumulative_co2_emissions_and_increase_in_global_surface_temp/Top_panel_HISTORY.csv
+  * temperature over time - Figure SPM.1 - the right panel has from 1850 to 2020 observed, simulated natural only, and simulated natural plus human caused warming
