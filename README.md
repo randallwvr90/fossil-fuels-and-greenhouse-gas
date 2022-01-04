@@ -2,7 +2,13 @@
 A project to use publicly available data to study the interaction between fossil fuel production, greenhouse gas concentrations, and global temperatures. Possibly looking at links among these and COVID-19 data. 
 
 ## Table of Contents
+* [Main Questions](#mainquestions)
 * [Data Sources](#datasources)
+
+## Main Questions
+* Is there a correlation between fossil fuel production and CO2 emissions? This could be gasoline only, all crude oil, or all fossil fuels. 
+* Is there a correlation between CO2 emissions and global temperatures?
+* Did COVID have an impact on fossil fuel production? What can this tell us about fossil fuel consumption and possibly its impact on the climate?
 
 ## Data Sources
 * Scripps CO2 Program - AKA The Keeling Curve
@@ -11,15 +17,23 @@ A project to use publicly available data to study the interaction between fossil
   * 1958 to present
   * Time Resolution: monthly, weekly, daily, every 10 minutes
   * Quality: these are direct measurements, and these data are considered by the American Chemical Society to be the ["authoritative record of atmospheric CO2 concentrations"](https://www.acs.org/content/acs/en/education/whatischemistry/landmarks/keeling-curve.html)
+  * 3242 rows in weekly data set
 * EIA Finished Gasoline Production - US Energy Information Administration
   * https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?n=PET&s=WGFRPUS2&f=W
   * US Refiner and Blender Adjusted Net Production of Finished Motor Gasoline
   * 1982 to present
   * Time Resolution: weekly
   * Quality: Not sure... US Government accounting of gasoline production seems legit but maybe we could find some citations or something. 
+  * 2048 rows in data set
+  * can we get global production data?
+  * can we get data for all fossil fuels?
 * CDC Covid Cases and Deaths by State
   * https://data.cdc.gov/Case-Surveillance/United-States-COVID-19-Cases-and-Deaths-by-State-o/9mfq-cb36/data
   * Quality: these data rely on state health department reporting, so there could be variation in quality among the states. It might be worth looking at one or two states or even going to state health departments for data.  
 * IPCC
-  * temperature vs cumulative CO2 emissions since 1850 - Figure SPM.10 - data located in /data/IPCC/Figure_SPM10_Near_linear_relationship_btwn_cumulative_co2_emissions_and_increase_in_global_surface_temp/Top_panel_HISTORY.csv
-  * temperature over time - Figure SPM.1 - the right panel has from 1850 to 2020 observed, simulated natural only, and simulated natural plus human caused warming
+  * temperature vs cumulative CO2 emissions from 1850 to 2019 
+    * Figure SPM.10 - data located in /data/IPCC/Figure_SPM10_Near_linear_relationship_btwn_cumulative_co2_emissions_and_increase_in_global_surface_temp/Top_panel_HISTORY.csv
+    * 170 rows - actually in columns, will need to transpose I think
+  * temperature over time 
+    * Figure SPM.1 - the right panel has from 1850 to 2020 observed, simulated natural only, and simulated natural plus human caused warming
+    * do we want to include any simulations? IDK...
