@@ -37,3 +37,7 @@ A project to use publicly available data to study the interaction between fossil
   * temperature over time 
     * Figure SPM.1 - the right panel has from 1850 to 2020 observed, simulated natural only, and simulated natural plus human caused warming
     * do we want to include any simulations? IDK...
+* EIA Monthly Energy Review
+  * Historical data including energy production, consumption, net imports, and non-combustion use by source (petrolium, nat gas, coal, nuclear, etc)
+  * Carbon dioxide emissions from energy consumption by source - in the "Environment" section
+  * https://www.eia.gov/totalenergy/data/monthly/index.php
