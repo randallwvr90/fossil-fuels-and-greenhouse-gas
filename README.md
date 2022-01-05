@@ -46,3 +46,7 @@ A project to use publicly available data to study the interaction between fossil
   * Historical data including energy production, consumption, net imports, and non-combustion use by source (petrolium, nat gas, coal, nuclear, etc)
   * Carbon dioxide emissions from energy consumption by source - in the "Environment" section
   * https://www.eia.gov/totalenergy/data/monthly/index.php
+* BP Statistical Review of World Energy
+  * Historical energy consumption by country, year, and energy source
+  * 1965 to present
+  * [Data Set on bp.com](https://www.bp.com/en/global/corporate/energy-economics/statistical-review-of-world-energy.html)
