@@ -1,5 +1,5 @@
 # fossil-fuels-and-greenhouse-gas
-A project to use publicly available data to study the interaction between fossil fuel production, greenhouse gas concentrations, and global temperatures. Possibly looking at links among these and COVID-19 data. 
+Study of interaction between consumption of fuel across the world and its relation to carbon emission. The analysis will also compare the GDP for each country to the amount of carbon emitted by that country. The analysis may include the atmospheric temperature in relation to carbon emissions.
 
 ## Table of Contents
 * [Visualizations](#visualizations)
