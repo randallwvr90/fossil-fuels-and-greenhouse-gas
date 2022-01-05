@@ -15,9 +15,16 @@ def index():
     Greenhouse Gas Emission Dashboard
     '''
     heading2: str = 'Pages:'
-    info: str = '/api/v1.0/consumption'
-    info2: str = '/api/v1.0/emissions'
-    return render_template('index.html', heading=heading, heading2=heading2, info=info, info2=info2)
+    content_1_title: str = 'Fossil Fuel Consumption'
+    content_1_location: str = '/api/v1.0/consumption'
+    content_2_title: str = 'CO2 Emissions'
+    content_2_location: str = '/api/v1.0/emissions'
+    return render_template(
+        'index.html',
+        heading=heading, heading2=heading2,
+        content_1_title=content_1_title, content_1_location=content_1_location,
+        content_2_title=content_2_title, content_2_location=content_2_location
+    )
 
 
 ############## Route - Fossil Fuel Consumption ##################
@@ -25,9 +32,19 @@ def index():
 
 @app.route('/api/v1.0/consumption')
 def consumption():
+    title: str = 'Fossil Fuel Consumption by Country'
     heading: str = 'Fossil Fuel Consumption by Country'
     info: str = 'This is the consumption page.'
-    return render_template("page1.html", heading=heading, info=info)
+    content_1_title: str = 'Fossil Fuel Consumption'
+    content_1_location: str = '/api/v1.0/consumption'
+    content_2_title: str = 'CO2 Emissions'
+    content_2_location: str = '/api/v1.0/emissions'
+    return render_template(
+        "page1.html", title=title,
+        heading=heading, info=info,
+        content_1_title=content_1_title, content_1_location=content_1_location,
+        content_2_title=content_2_title, content_2_location=content_2_location
+    )
 
 ############## Route - Greenhouse Gas Emissions ##################
     @app.route('/api/v1.0/emissions')

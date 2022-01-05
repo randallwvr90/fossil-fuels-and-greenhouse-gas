@@ -19,14 +19,13 @@
               </a>
         
               <ul class="nav nav-pills">
-                <li class="nav-item"><a href="#" class="nav-link active" aria-current="page">Home</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">Features</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">Pricing</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">FAQs</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">About</a></li>
+                <li class="nav-item"><a href="/" class="nav-link active" aria-current="page">Home</a></li>
+                <li class="nav-item"><a href={{content_1_location}} class="nav-link">{{content_1_title}}</a></li>
+                <li class="nav-item"><a href={{content_2_location}} class="nav-link">{{content_2_title}}</a></li>
+                <li class="nav-item"><a href="https://github.com/randallwvr90/fossil-fuels-and-greenhouse-gas" class="nav-link">About</a></li>
               </ul>
             </header>
-          </div>
+        </div>
         <div class="container">
 
             <div class="jumbotron text-center">
@@ -35,8 +34,8 @@
                 <h1>{{ heading }}</h1>
                 <h2>{{ heading2 }}</h2>
                 <ul>
-                    <li>{{ info }}</li> <!-- BUG bullets are way too far to the right -->
-                    <li>{{ info2 }}</li>
+                    <li>{{ content_1_location }}</li> <!-- BUG bullets are way too far to the right -->
+                    <li>{{ content_2_location }}</li>
                 </ul>
 
             </div>
