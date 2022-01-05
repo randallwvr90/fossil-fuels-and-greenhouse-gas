@@ -12,8 +12,11 @@ A project to use publicly available data to study the interaction between fossil
 * Did COVID have an impact on fossil fuel production? What can this tell us about fossil fuel consumption and possibly its impact on the climate?
 
 ## Visualizations
-* What visualizations will we ideally use to tell a story with these data?
-* This will need to be in a dashboard. 
+* Filter by country and view the information on GDP vs. Fuel Production vs. CO2 Emission
+* Chart displaying different types fuel produced by volume
+* Temperature heatmap across the world, ability to view the data by year and by country
+* Fuel consumption heatmap across the world, ability to view the data by year and by country
+
 
 ## Data Sources
 * Scripps CO2 Program - AKA The Keeling Curve
