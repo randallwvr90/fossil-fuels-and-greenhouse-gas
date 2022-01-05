@@ -33,7 +33,7 @@ A project to use publicly available data to study the interaction between fossil
   * can we get global production data?
   * can we get data for all fossil fuels?
 * CDC Covid Cases and Deaths by State
-  * https://data.cdc.gov/Case-Surveillance/United-States-COVID-19-Cases-and-Deaths-by-State-o/9mfq-cb36/data
+  * [CDC Covid Cases and Deaths by State Landing Page](https://data.cdc.gov/Case-Surveillance/United-States-COVID-19-Cases-and-Deaths-by-State-o/9mfq-cb36/data)
   * Quality: these data rely on state health department reporting, so there could be variation in quality among the states. It might be worth looking at one or two states or even going to state health departments for data.  
 * IPCC temperature data
   * temperature vs cumulative CO2 emissions from 1850 to 2019 
@@ -45,7 +45,7 @@ A project to use publicly available data to study the interaction between fossil
 * EIA Monthly Energy Review
   * Historical data including energy production, consumption, net imports, and non-combustion use by source (petrolium, nat gas, coal, nuclear, etc)
   * Carbon dioxide emissions from energy consumption by source - in the "Environment" section
-  * https://www.eia.gov/totalenergy/data/monthly/index.php
+  * [EIA Monthly Energy Review Landing Page](https://www.eia.gov/totalenergy/data/monthly/index.php)
 * BP Statistical Review of World Energy
   * Historical energy consumption by country, year, and energy source
   * 1965 to present
