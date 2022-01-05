@@ -2,14 +2,8 @@
 A project to use publicly available data to study the interaction between fossil fuel production, greenhouse gas concentrations, and global temperatures. Possibly looking at links among these and COVID-19 data. 
 
 ## Table of Contents
-* [Main Questions](#mainquestions)
 * [Visualizations](#visualizations)
 * [Data Sources](#datasources)
-
-## Main Questions
-* Is there a correlation between fossil fuel production and CO2 emissions? This could be gasoline only, all crude oil, or all fossil fuels. 
-* Is there a correlation between CO2 emissions and global temperatures?
-* Did COVID have an impact on fossil fuel production? What can this tell us about fossil fuel consumption and possibly its impact on the climate?
 
 ## Visualizations
 * Filter by country and view the information on GDP vs. Fuel Production vs. CO2 Emission
