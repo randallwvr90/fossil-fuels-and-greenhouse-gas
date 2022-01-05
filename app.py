@@ -35,6 +35,8 @@ def consumption():
     title: str = 'Fossil Fuel Consumption by Country'
     heading: str = 'Fossil Fuel Consumption by Country'
     info: str = 'This is the consumption page.'
+    # TODO Is there a better way to structure this? Global variables?
+    # TODO convert all hardcoded page info to variables that can be stored here
     content_1_title: str = 'Fossil Fuel Consumption'
     content_1_location: str = '/api/v1.0/consumption'
     content_2_title: str = 'CO2 Emissions'
@@ -47,13 +49,21 @@ def consumption():
     )
 
 ############## Route - Greenhouse Gas Emissions ##################
-    @app.route('/api/v1.0/emissions')
-    def emissions():
 
-        return(
-            f'<h1>Greenhouse Gas Emissions by Country</h1>'
-        )
+
+@app.route('/api/v1.0/emissions')
+def emissions():
+
+    return(
+        f'<h1>Greenhouse Gas Emissions by Country</h1>'
+    )
+
+
+def main():
+    '''Run the Flask app.'''
+
+    app.run(debug=True)
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    main()
