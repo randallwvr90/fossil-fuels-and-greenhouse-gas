@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="Jennifer Long, Danelle Cook, Chineze Okpala, Hari Somayajula, Abishua Prashanth, and Randy Weaver">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Fossil Fuel and Greenhouse Gas Dashboard Landing Page</title>
+        <link href="https://getbootstrap.com/docs/5.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    </head>
+
+    <body>
+        <div class="container">
+            <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+              <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+                <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+                <span class="fs-4">Fossil Fuels Impact Project</span>
+              </a>
+        
+              <ul class="nav nav-pills">
+                <li class="nav-item"><a href="/" class="nav-link active" aria-current="page">Home</a></li>
+                <li class="nav-item"><a href={{content_1_location}} class="nav-link">{{content_1_title}}</a></li>
+                <li class="nav-item"><a href={{content_2_location}} class="nav-link">{{content_2_title}}</a></li>
+                <li class="nav-item"><a href="https://github.com/randallwvr90/fossil-fuels-and-greenhouse-gas" class="nav-link">About</a></li>
+              </ul>
+            </header>
+        </div>
+        <div class="container">
+
+            <div class="jumbotron text-center">
+
+                <!-- Add some information -->
+                <h1>{{ heading }}</h1>
+                <h2>{{ heading2 }}</h2>
+                <ul>
+                    <li>{{ content_1_location }}</li> <!-- BUG bullets are way too far to the right -->
+                    <li>{{ content_2_location }}</li>
+                </ul>
+
+            </div>
+
+            <!-- Add link to bonus -->
+            <p> Click <a href={{content_1_location}}>here</a> to visit the {{content_1_title}} page!</p>
+
+        </div>
+    </body>
+
+</html>
