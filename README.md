@@ -4,6 +4,7 @@ Study of interaction between consumption of fuel across the world and its relati
 ## Table of Contents
 * [Visualizations](#visualizations)
 * [Data Sources](#datasources)
+* [Contributors](#contributors)
 
 ## Visualizations
 * Filter by country and view the information on GDP vs. Fuel Production vs. CO2 Emission
@@ -48,3 +49,10 @@ Study of interaction between consumption of fuel across the world and its relati
   * Carbon dioxide emissions from energy consumption by source - in the "Environment" section
   * [EIA Monthly Energy Review Landing Page](https://www.eia.gov/totalenergy/data/monthly/index.php)
 
+## Contributors
+* Jennifer Long
+* Danelle Cook
+* Chineze Okpala
+* Hari Somayajula
+* Abishua Prashanth
+* Randy Weaver
