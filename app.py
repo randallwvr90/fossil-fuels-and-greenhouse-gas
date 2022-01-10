@@ -1,11 +1,15 @@
 # flask imports
-from flask import Flask, render_template
-
+from flask import Flask, render_template,jsonify
+import psycopg2
+import os
 
 # -------------------------------------------------------------------- #
 #                               Flask
 # -------------------------------------------------------------------- #
+# setting up template directory
+#ASSETS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../static/app')
 
+##app = Flask(__name__, template_folder=ASSETS_DIR, static_folder=ASSETS_DIR)
 app = Flask(__name__)
 
 # -------------------------------------------------------------------- #
@@ -15,6 +19,8 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
+    #Connect to the database to get the list of countries
+
     heading: str = '''
     Fossil Fuel Consumption and 
     Greenhouse Gas Emission Dashboard
@@ -31,6 +37,29 @@ def index():
         content_2_title=content_2_title, content_2_location=content_2_location
     )
 
+@app.route("/api/v1.0/countries")
+def get_countries():
+    """Return the justice league data as json"""
+    conn = open_connection()
+
+    print("Hello")
+
+    cursor  = conn.cursor()
+    cursor.execute("""Select country from country_master""")
+    results = cursor.fetchall()
+    print(results)
+    cursor.close()
+
+    close_connection(conn)
+    return jsonify(results)
+
+def open_connection():
+    conn = psycopg2.connect(host="localhost", port = 5432, database="fossil", user="postgres", password="ganesha123")
+    return conn
+
+def close_connection(conn):
+    conn.close()
+    
 
 # -------------------------------------------------------------------- #
 #                  Route - Fossil Fuel Consumption
