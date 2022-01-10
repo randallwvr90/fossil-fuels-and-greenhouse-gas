@@ -15,7 +15,7 @@
             <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
               <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
                 <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
-                <span class="fs-4">Fossil Fuels Impact Project</span>
+                <!--<span class="fs-4">Fossil Fuels Impact Project</span>-->
               </a>
         
               <ul class="nav nav-pills">
@@ -27,23 +27,59 @@
             </header>
         </div>
         <div class="container">
-
+    <!--
             <div class="jumbotron text-center">
 
-                <!-- Add some information -->
+               
                 <h1>{{ heading }}</h1>
                 <h2>{{ heading2 }}</h2>
                 <ul>
-                    <li>{{ content_1_location }}</li> <!-- BUG bullets are way too far to the right -->
+                    <li>{{ content_1_location }}</li> 
                     <li>{{ content_2_location }}</li>
                 </ul>
 
             </div>
 
-            <!-- Add link to bonus -->
+            
             <p> Click <a href={{content_1_location}}>here</a> to visit the {{content_1_title}} page!</p>
 
         </div>
+
+    -->
+
+    <div class="row">
+        <div class="col-md-12 jumbotron text-center">
+          <h1>Fuel Consumption and Production Impact</h1>
+          <p>Use the interactive charts below to explore the dataset</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-2">
+          <div class="well">
+            <h5>Selct a Country.:</h5>
+            <select id="selDataset" onchange="optionChanged(this.value)"></select>
+          </div>
+          
+        </div>
+        <div class="col-md-5">
+          <div id="bar"></div>
+        </div>
+        <div class="col-md-5">
+          <div id="gauge"></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div id="bubble"></div>
+        </div>
+      </div>
+
+
+    <!-- <script src="https://d3js.org/d3.v5.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="{{url_for('static', filename='app.js')}}"></script>
+    
     </body>
 
 </html>
