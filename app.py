@@ -1,7 +1,8 @@
 # flask imports
 from flask import Flask, render_template,jsonify
 import psycopg2
-import os
+
+from postgres_key import DB_USER,DB_KEY,DB_NAME
 
 # -------------------------------------------------------------------- #
 #                               Flask
@@ -67,7 +68,7 @@ def get_year_groupings():
 
 
 def open_connection():
-    conn = psycopg2.connect(host="localhost", port = 5432, database="fossil", user="postgres", password="ganesha123")
+    conn = psycopg2.connect(host="localhost", port = 5432, database=DB_NAME, user=DB_USER, password=DB_KEY)
     return conn
 
 def close_connection(conn):
