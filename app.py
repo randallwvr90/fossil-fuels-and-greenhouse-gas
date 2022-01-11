@@ -58,7 +58,7 @@ def get_year_groupings():
     print("Hello")
 
     cursor  = conn.cursor()
-    cursor.execute("""select distinct year_grouping from fuel_consumption""")
+    cursor.execute("""select distinct year_range from fuel_consumption""")
     results = cursor.fetchall()
     print(results)
     cursor.close()
