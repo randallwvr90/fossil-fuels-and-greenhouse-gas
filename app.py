@@ -49,6 +49,23 @@ def get_countries():
     close_connection(conn)
     return jsonify(results)
 
+@app.route("/api/v1.0/groupings")
+def get_year_groupings():
+    """Return the justice league data as json"""
+    conn = open_connection()
+
+    print("Hello")
+
+    cursor  = conn.cursor()
+    cursor.execute("""select distinct year_grouping from fuel_consumption""")
+    results = cursor.fetchall()
+    print(results)
+    cursor.close()
+
+    close_connection(conn)
+    return jsonify(results)
+
+
 def open_connection():
     conn = psycopg2.connect(host="localhost", port = 5432, database="fossil", user="postgres", password="ganesha123")
     return conn
