@@ -1,3 +1,3 @@
-DB_USER="postgres"
-DB_KEY="ganesha123"
-DB_NAME="fossil_fuel"
+DB_USER=""
+DB_KEY=""
+DB_NAME=""
