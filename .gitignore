@@ -11,6 +11,9 @@ ooptest.py
 project_requirements.png
 project_rubric.png
 
+#DB Password file
+postgres_key.py
+
 # python stuff from github's python .gitignore template
 # https://github.com/github/gitignore/blob/main/Python.gitignore
 # Byte-compiled / optimized / DLL files
