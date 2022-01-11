@@ -1,13 +1,12 @@
 # flask imports
-from flask import Flask, render_template
+from flask import Flask, render_template,jsonify
+import psycopg2
 
-# SQLAlchemy
-from sqlalchemy import create_engine
+from postgres_key import DB_USER,DB_KEY,DB_NAME
 
 # -------------------------------------------------------------------- #
 #                               Flask
 # -------------------------------------------------------------------- #
-
 app = Flask(__name__)
 
 # -------------------------------------------------------------------- #
@@ -17,6 +16,8 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
+    #Connect to the database to get the list of countries
+
     heading: str = '''
     Fossil Fuel Consumption and 
     Greenhouse Gas Emission Dashboard
@@ -33,6 +34,46 @@ def index():
         content_2_title=content_2_title, content_2_location=content_2_location
     )
 
+@app.route("/api/v1.0/countries")
+def get_countries():
+    """Return the justice league data as json"""
+    conn = open_connection()
+
+    print("Hello")
+
+    cursor  = conn.cursor()
+    cursor.execute("""Select country from country_master""")
+    results = cursor.fetchall()
+    print(results)
+    cursor.close()
+
+    close_connection(conn)
+    return jsonify(results)
+
+@app.route("/api/v1.0/groupings")
+def get_year_groupings():
+    """Return the justice league data as json"""
+    conn = open_connection()
+
+    print("Hello")
+
+    cursor  = conn.cursor()
+    cursor.execute("""select distinct year_range from fuel_consumption""")
+    results = cursor.fetchall()
+    print(results)
+    cursor.close()
+
+    close_connection(conn)
+    return jsonify(results)
+
+
+def open_connection():
+    conn = psycopg2.connect(host="localhost", port = 5432, database=DB_NAME, user=DB_USER, password=DB_KEY)
+    return conn
+
+def close_connection(conn):
+    conn.close()
+    
 
 # -------------------------------------------------------------------- #
 #                  Route - Fossil Fuel Consumption
