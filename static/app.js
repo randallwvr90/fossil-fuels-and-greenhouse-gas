@@ -1,4 +1,3 @@
-
 d3.json("http://127.0.0.1:5000/api/v1.0/countries").then((countries) => {
 
     console.log(countries)
@@ -16,3 +15,4 @@ d3.json("http://127.0.0.1:5000/api/v1.0/groupings").then((yearRanges) => {
         d3.select("#selYear").append("option").text(range);
     });
 });
+
