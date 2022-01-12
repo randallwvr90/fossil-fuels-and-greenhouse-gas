@@ -30,9 +30,9 @@ function init(){
 
     
     // Set default values on inital load
-    let countryVal = "US";
-    let yearRangeVal = "2005-2015"
-
+    let countryVal = "Algeria";
+    let yearRangeVal = "1965-1975"
+    
     // Create the GDP line chart
     create_gdp_line_chart(countryVal, yearRangeVal)
 
@@ -58,7 +58,8 @@ function create_gdp_line_chart(countryVal, yearRangeVal){
     var data = [trace1];
 
     var layout = {
-        title: `GDP for ${countryVal} for the years ${yearRangeVal}`,
+        // title: `GDP for ${countryVal} for the years ${yearRangeVal}`,
+        title: `GDP over 10 year period`,
         width: 600,
         xaxis: {
             title: 'Year',
@@ -81,14 +82,40 @@ function countryOptionChanged(countrySelected){
     // Get the year range
     let selYear = document.getElementById("selYear");
     let yearRangeVal  = selYear.options[selYear.selectedIndex].value;
-}
-
-function get_gdp_data(countryVal, yearRangeVal){
-
-    url = `http://127.0.0.1:5000/api/v1.0/gdp/${countryVal}/${yearRangeVal}`
-    var data = "";
+    url = `http://127.0.0.1:5000/api/v1.0/gdp/${countrySelected}/${yearRangeVal}`
+    
     //Make an api call to get the GDP for the selected country
     d3.json(url).then((gdp) => {
-        console.log(gdp);
-    });
+        Plotly.restyle("gdp-line", "x", [gdp[0]])
+        Plotly.restyle("gdp-line", "y", [gdp[1]])
+        Plotly.restyle("gdp-line", "text", [`GDP for ${countrySelected} for the years ${yearRangeVal}`])
+    });   
 }
+
+function yearsOptionChanged(yearRangeVal){
+    // Get the year range
+    let selCountry = document.getElementById("selCountry");
+    let countrySelected  = selCountry.options[selCountry.selectedIndex].value;
+    url = `http://127.0.0.1:5000/api/v1.0/gdp/${countrySelected}/${yearRangeVal}`
+    
+    //Make an api call to get the GDP for the selected country
+    d3.json(url).then((gdp) => {
+        Plotly.restyle("gdp-line", "x", [gdp[0]])
+        Plotly.restyle("gdp-line", "y", [gdp[1]])
+        Plotly.restyle("gdp-line", "text", [`GDP for ${countrySelected} for the years ${yearRangeVal}`])
+    });   
+}
+
+// function get_gdp_data(countryVal, yearRangeVal){
+
+//     url = `http://127.0.0.1:5000/api/v1.0/gdp/${countryVal}/${yearRangeVal}`
+//     var data = [];
+//     console.log(countryVal);
+
+//     //Make an api call to get the GDP for the selected country
+//     d3.json(url).then((gdp) => {
+//         console.log(gdp);
+//         data = gdp;
+//         return data;
+//     });
+// }
