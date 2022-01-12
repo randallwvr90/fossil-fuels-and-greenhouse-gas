@@ -12,8 +12,6 @@ app = Flask(__name__)
 # -------------------------------------------------------------------- #
 #                           Route - Home
 # -------------------------------------------------------------------- #
-
-
 @app.route('/')
 def index():
     #Connect to the database to get the list of countries
@@ -34,6 +32,9 @@ def index():
         content_2_title=content_2_title, content_2_location=content_2_location
     )
 
+# -------------------------------------------------------------------- #
+#                      Route - to get the list of countries
+# -------------------------------------------------------------------- #
 @app.route("/api/v1.0/countries")
 def get_countries():
     """Return the justice league data as json"""
@@ -46,12 +47,15 @@ def get_countries():
     close_connection(conn)
     return jsonify(results)
 
+# -------------------------------------------------------------------- #
+#                      Route - to get the list of year ranges
+# -------------------------------------------------------------------- #
 @app.route("/api/v1.0/groupings")
 def get_year_groupings():
     """Return the justice league data as json"""
     conn = open_connection()
     cursor  = conn.cursor()
-    cursor.execute("""select distinct year_range from fuel_consumption""")
+    cursor.execute("""select distinct year_range from fuel_consumption order by year_range asc""")
     results = cursor.fetchall()
     cursor.close()
 
@@ -68,11 +72,6 @@ def get_gdp(country, year_range):
     fromYear = int(years[0])
     toYear = int(years[1])
 
-    print("***********************")
-    print(years)
-    print(country)
-
-
     cursor  = conn.cursor()
     cursor.execute("""select year, gdp from gdp where country = (%s) and year between (%s) and (%s) """, (country, fromYear, toYear, ))
     results = cursor.fetchall()
@@ -83,6 +82,8 @@ def get_gdp(country, year_range):
     years = []
     gdpValue = []
     returnValue = []
+
+    #Loop through the result to seperate the year and the gdp value
     for result in results:
         years.append(result[0])
         gdpValue.append(result[1])

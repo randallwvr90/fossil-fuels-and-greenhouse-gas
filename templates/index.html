@@ -54,25 +54,34 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-md-2">
+        <div class="col-md-6">
           <div class="well">
             <h5>Select Country:</h5>
-            <select id="selCountry" onchange="optionChanged(this.value)"></select>
+            <select id="selCountry" onchange="countryOptionChanged(this.value)"></select>
           </div>
           
         </div>
-        <div class="col-md-2">
+        <div class="col-md-6">
             <div class="well">
               <h5>Select Years:</h5>
-              <select id="selYear" onchange="optionChanged(this.value)"></select>
-            </div>
-            
-          </div>
-        <div class="col-md-4">
-          <div id="gdp-line"></div>
+              <select id="selYear" onchange="YearsOptionChanged(this.value)"></select>
+            </div> 
+        </div> 
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+            <div id="fuel-prod-bar"></div>
         </div>
-        <div class="col-md-4">
-          <div id="bar"></div>
+        <div class="col-md-6">
+            <div id="fuel-cons-bar"></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+            <div id="gdp-line"></div>
+        </div>
+        <div class="col-md-6">
+            <div id="co2-line"></div>
         </div>
       </div>
       <div class="row">
