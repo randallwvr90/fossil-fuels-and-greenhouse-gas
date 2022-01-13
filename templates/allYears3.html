@@ -28,20 +28,23 @@
     <div class="row">
         <div class="col-md-12 jumbotron text-center">
           <h1>Fuel Consumption and Emissions Since 1965</h1>
-          <p>Use the interactive chart below to explore the dataset</p>
         </div>
       </div>
       <div class="row">
-        <div class="col-md-2">
+        <div class="col-md-6">
           <div class="well">
             <h5>Select Country:</h5>
-            <select id="selCountry" onchange="optionChanged(this.value)"></select>
+            <select id="selCountry2" onchange="countryOptionChanged2(this.value)"></select>
           </div>
+          
         </div>
       </div>
       <div class="row">
-        <div class="col-md-12">
-          <div id="allYears-line"></div>
+        <div class="col-md-6">
+          <div id="allConsumption-line"></div>
+        </div>
+        <div class="col-md-6">
+          <div id="allEmissions-line"></div>
         </div>
       </div>
 
