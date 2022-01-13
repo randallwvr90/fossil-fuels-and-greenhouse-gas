@@ -1,13 +1,12 @@
 # flask imports
-from flask import Flask, render_template,jsonify
+from flask import Flask, render_template, jsonify
 import psycopg2
 from sqlalchemy import create_engine
 import pandas as pd
 import numpy as np
 
-from postgres_key import DB_USER,DB_KEY,DB_NAME
+from postgres_key import DB_USER, DB_KEY, DB_NAME
 from createDatabase import create_db
-
 
 
 # -------------------------------------------------------------------- #
@@ -15,12 +14,25 @@ from createDatabase import create_db
 # -------------------------------------------------------------------- #
 app = Flask(__name__)
 
+
+def open_connection():
+    conn = psycopg2.connect(host="localhost", port=5432,
+                            database=DB_NAME, user=DB_USER, password=DB_KEY)
+    return conn
+
+
+def close_connection(conn):
+    conn.close()
+
+
 # -------------------------------------------------------------------- #
 #                           Route - Home
 # -------------------------------------------------------------------- #
+
+
 @app.route('/')
 def index():
-    #Connect to the database to get the list of countries
+    # Connect to the database to get the list of countries
 
     heading: str = '''
     Fossil Fuel Consumption and 
@@ -33,19 +45,22 @@ def index():
     #content_2_location: str = '/api/v1.0/emissions'
     return render_template(
         'index.html',
-        heading=heading, heading2=heading2 #,
+        heading=heading, heading2=heading2  # ,
         #content_1_title=content_1_title, content_1_location=content_1_location,
         #content_2_title=content_2_title, content_2_location=content_2_location
     )
 
+
 # -------------------------------------------------------------------- #
-#                      Route - to get the list of countries
+#                Route - get the list of countries
 # -------------------------------------------------------------------- #
+
+
 @app.route("/api/v1.0/countries")
 def get_countries():
     """Return Countries data as json"""
     conn = open_connection()
-    cursor  = conn.cursor()
+    cursor = conn.cursor()
     cursor.execute("""Select country from country_master order by 1""")
     results = cursor.fetchall()
     cursor.close()
@@ -53,35 +68,46 @@ def get_countries():
     close_connection(conn)
     return jsonify(results)
 
+
 # -------------------------------------------------------------------- #
-#                      Route - to get the list of year ranges
+#                 Route - get the list of year ranges
 # -------------------------------------------------------------------- #
+
+
 @app.route("/api/v1.0/groupings")
 def get_year_groupings():
     """Return Year Ranges data as json"""
     conn = open_connection()
-    cursor  = conn.cursor()
-    cursor.execute("""select distinct year_range from fuel_consumption order by year_range asc""")
+    cursor = conn.cursor()
+    cursor.execute(
+        """select distinct year_range from fuel_consumption order by year_range asc""")
     results = cursor.fetchall()
     cursor.close()
 
     close_connection(conn)
     return jsonify(results)
 
+
+# -------------------------------------------------------------------- #
+#           Route - gdp for a country in a specified year range
+# -------------------------------------------------------------------- #
+
+
 @app.route("/api/v1.0/gdp/<country>/<year_range>")
 def get_gdp(country, year_range):
     """Return GDP data as json"""
     conn = open_connection()
 
-    years  = year_range.split('-')
+    years = year_range.split('-')
 
     fromYear = int(years[0])
     toYear = int(years[1])
 
-    cursor  = conn.cursor()
-    cursor.execute("""select year, gdp from gdp where country = (%s) and year between (%s) and (%s) """, (country, fromYear, toYear, ))
+    cursor = conn.cursor()
+    cursor.execute("""select year, gdp from gdp where country = (%s) and year between (%s) and (%s) """,
+                   (country, fromYear, toYear))
     results = cursor.fetchall()
-    #print(results)
+    # print(results)
     cursor.close()
     close_connection(conn)
 
@@ -89,7 +115,7 @@ def get_gdp(country, year_range):
     gdpValue = []
     returnValue = []
 
-    #Loop through the result to seperate the year and the gdp value
+    # Loop through the result to seperate the year and the gdp value
     for result in results:
         years.append(result[0])
         gdpValue.append(result[1])
@@ -97,17 +123,9 @@ def get_gdp(country, year_range):
     returnValue.append(years)
     returnValue.append(gdpValue)
 
-    #print(returnValue)
+    # print(returnValue)
     return jsonify(returnValue)
 
-
-def open_connection():
-    conn = psycopg2.connect(host="localhost", port = 5432, database=DB_NAME, user=DB_USER, password=DB_KEY)
-    return conn
-
-def close_connection(conn):
-    conn.close()
-    
 
 # -------------------------------------------------------------------- #
 #                  Route - Fossil Fuel Consumption
@@ -115,7 +133,7 @@ def close_connection(conn):
 
 
 @app.route('/api/v1.0/consumption')
-def consumption(country,year_range):
+def consumption(country, year_range):
     title: str = 'Fossil Fuel Consumption by Country'
     heading: str = 'Fossil Fuel Consumption by Country'
     info: str = 'This is the consumption page.'
@@ -132,19 +150,23 @@ def consumption(country,year_range):
         content_2_title=content_2_title, content_2_location=content_2_location
     )
 
+
 # -------------------------------------------------------------------- #
 #                  Route - Greenhouse Gas Emissions
 # -------------------------------------------------------------------- #
 
 
 @app.route('/api/v1.0/emissions/<country>/<year_range>')
-def emissions(country,year_range):
-    
+def emissions(country, year_range):
+
     conn = open_connection()
-    cursor  = conn.cursor()
-    cursor.execute("""select year,emission_value from co2_emission where country = (%s) and year_range=(%s)""", (country, year_range, ))
+    cursor = conn.cursor()
+    cursor.execute(
+        """select year,emission_value from co2_emission where country = (%s) and year_range=(%s)""",
+        (country, year_range)
+    )
     results = cursor.fetchall()
-    #print(results)
+    # print(results)
     cursor.close()
     close_connection(conn)
 
@@ -152,7 +174,7 @@ def emissions(country,year_range):
     EmissionValue = []
     returnValue = []
 
-    #Loop through the result to seperate the year and the gdp value
+    # Loop through the result to seperate the year and the gdp value
     for result in results:
         years.append(result[0])
         EmissionValue.append(result[1])
@@ -160,15 +182,14 @@ def emissions(country,year_range):
     returnValue.append(years)
     returnValue.append(EmissionValue)
 
-    #print(returnValue)
+    # print(returnValue)
     return jsonify(returnValue)
 
-    
 
 def main():
     #----------Create DB------#
     print("Creating Database")
-    create_db(DB_USER,DB_KEY,DB_NAME)
+    create_db(DB_USER, DB_KEY, DB_NAME)
     print("Database Created")
     '''Run the Flask app.'''
     app.run(debug=False)
