@@ -1,5 +1,6 @@
 # flask imports
 from flask import Flask, render_template, jsonify
+import json
 import psycopg2
 from sqlalchemy import create_engine
 import pandas as pd
@@ -43,14 +44,14 @@ def index():
     Fossil Fuel Consumption and 
     Greenhouse Gas Emission Dashboard
     '''
-    heading2: str = 'Pages:'
+    #heading2: str = 'Pages:'
     #content_1_title: str = 'Fossil Fuel Consumption'
     #content_1_location: str = '/api/v1.0/consumption'
     #content_2_title: str = 'CO2 Emissions'
     #content_2_location: str = '/api/v1.0/emissions'
     return render_template(
         'index.html',
-        heading=heading, heading2=heading2  # ,
+        heading=heading
         #content_1_title=content_1_title, content_1_location=content_1_location,
         #content_2_title=content_2_title, content_2_location=content_2_location
     )
@@ -191,13 +192,36 @@ def emissions(country, year_range):
     return jsonify(returnValue)
 
 
+# -------------------------------------------------------------------- #
+#                      Route - emissions map
+# -------------------------------------------------------------------- #
+
+
+@app.route("/api/v1.0/emissions_map")
+def emissions_map():
+    return render_template(
+        'map_page.html'
+    )
+
+
+@app.route("/api/low_res_world")
+def low_res_world():
+    geo_json_path = './static/data/low_res_world.geo.json'
+    f = open(geo_json_path, "r")
+    # geo_json = f.readline()
+    geo_json_dict = json.load(f)
+    f.close()
+    print(type(geo_json_dict))
+    return jsonify(geo_json_dict)
+
+
 def main():
     #----------Create DB------#
     print("Creating Database")
     create_db(DB_USER, DB_KEY, DB_NAME)
     print("Database Created")
     '''Run the Flask app.'''
-    app.run(debug=False)
+    app.run(debug=True)
 
 
 if __name__ == "__main__":

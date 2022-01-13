@@ -55,7 +55,7 @@
     <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
     <!-- <script src="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.js"></script> -->
     <script>
-        var myGeoJSONPath = '../../static/data/low_res_world.geo.json';
+        var myGeoJSONPath = '/api/low_res_world';
         var myCustomStyle = {
             stroke: false,
             fill: true,
@@ -63,6 +63,7 @@
             fillOpacity: 1
         }
         $.getJSON(myGeoJSONPath,function(data){
+            console.log(data)
             var map = L.map('map').setView([30, 0], 2);
 
             L.geoJson(data, {
