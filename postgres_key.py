@@ -1,3 +1,4 @@
-DB_USER="postgres"
-DB_KEY="ganesha123"
-DB_NAME="fossil_fuel"
+#postgresDBPassword
+DB_USER='postgres'
+DB_KEY='GATech!@34'
+DB_NAME='co2emission_db'
