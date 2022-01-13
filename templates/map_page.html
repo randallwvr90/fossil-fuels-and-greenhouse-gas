@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<!-- low_res_world.geo.json and html template generated at https://geojson-maps.ash.ms/ -->
+<html lang="en">
+<head>
+    <title>Leaflet GeoJSON Example</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.css" />
+    <style type="text/css">
+        .leaflet-container{background-color:#c5e8ff;}
+    </style>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Jennifer Long, Danelle Cook, Chineze Okpala, Hari Somayajula, Abishua Prashanth, and Randy Weaver">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://getbootstrap.com/docs/5.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <!-- from nyc borroughs index.html -->
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.3/dist/leaflet.css"
+    integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
+    crossorigin=""/>
+
+    <!-- Leaflet JavaScript code -->
+    <script src="https://unpkg.com/leaflet@1.3.3/dist/leaflet.js"
+    integrity="sha512-tAGcCfR4Sc5ZP5ZoVz0quoZDYX5aCtEm/eu1KhSLj2c9eFrylXZknQYmxUssFaVJKvvc0dJQixhGjG2yXWiV9Q=="
+    crossorigin=""></script>
+
+    <!-- D3 library -->
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+
+    <!-- Our CSS -->
+    <!-- <link rel="stylesheet" type="text/css" href="static/css/style.css"> -->
+
+</head>
+
+<body>
+    <div class="container">
+        <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+            <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+            <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+            <span class="fs-4">Fossil Fuels Impact Project</span>
+            </a>
+    
+            <ul class="nav nav-pills">
+            <li class="nav-item"><a href="/" class="nav-link active" aria-current="page">Home</a></li>
+            <li class="nav-item"><a href={{content_1_location}} class="nav-link">{{content_1_title}}</a></li>
+            <li class="nav-item"><a href={{content_2_location}} class="nav-link">{{content_2_title}}</a></li>
+            <li class="nav-item"><a href="https://github.com/randallwvr90/fossil-fuels-and-greenhouse-gas" class="nav-link">About</a></li>
+            </ul>
+        </header>
+    </div>
+
+    <div id="map" style="width: 1200px; height: 800px"></div>
+
+    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <!-- <script src="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.js"></script> -->
+    <script>
+        var myGeoJSONPath = '../../static/data/low_res_world.geo.json';
+        var myCustomStyle = {
+            stroke: false,
+            fill: true,
+            fillColor: '#fff',
+            fillOpacity: 1
+        }
+        $.getJSON(myGeoJSONPath,function(data){
+            var map = L.map('map').setView([30, 0], 2);
+
+            L.geoJson(data, {
+                clickable: false,
+                style: myCustomStyle
+            }).addTo(map);
+        })
+    </script>
+</body>
+</html>
