@@ -56,4 +56,3 @@ Study of interaction between consumption of fuel across the world and its relati
 * Hari Somayajula
 * Abishua Prashanth
 * Randy Weaver
-* Henry White
