@@ -32,9 +32,11 @@ function init(){
     // Set default values on inital load
     let countryVal = "Algeria";
     let yearRangeVal = "1965-1975"
+
     
     // Create the GDP line chart
-    create_gdp_line_chart(countryVal, yearRangeVal)
+    create_gdp_line_chart(countryVal, yearRangeVal);
+    create_emission_line_chart(countryVal, yearRangeVal)
 
 }
 
@@ -77,6 +79,45 @@ function create_gdp_line_chart(countryVal, yearRangeVal){
 
 }
 
+function create_emission_line_chart(countryVal, yearRangeVal){
+
+    url = `http://127.0.0.1:5000/api/v1.0/emissions/${countryVal}/${yearRangeVal}`
+
+    //Make an api call to get the GDP for the selected country
+   
+    d3.json(url).then((emission) => {
+    var trace1 = {
+        x: emission[0],
+        y: emission[1],
+        type: 'lines',
+        ine: {
+            color: 'rgb(55, 128, 191)',
+            width: 2
+        }
+    };
+    
+    var data = [trace1];
+
+    var layout = {
+        // title: `Emission for ${countryVal} for the years ${yearRangeVal}`,
+        title: `CO2 Emissions over 10 year period`,
+        width: 600,
+        xaxis: {
+            title: 'Year',
+            showgrid: false,
+            zeroline: false
+        },
+        yaxis: {
+            title: 'Metric Tonnes',
+            showline: false
+        }
+    };
+    
+    Plotly.newPlot('co2-line', data, layout);
+});
+
+}
+
 
 function countryOptionChanged(countrySelected){
     // Get the year range
@@ -90,6 +131,8 @@ function countryOptionChanged(countrySelected){
         Plotly.restyle("gdp-line", "y", [gdp[1]])
         Plotly.restyle("gdp-line", "text", [`GDP for ${countrySelected} for the years ${yearRangeVal}`])
     });   
+
+    create_emission_line_chart(countrySelected,yearRangeVal);
 }
 
 function yearsOptionChanged(yearRangeVal){
@@ -103,7 +146,9 @@ function yearsOptionChanged(yearRangeVal){
         Plotly.restyle("gdp-line", "x", [gdp[0]])
         Plotly.restyle("gdp-line", "y", [gdp[1]])
         Plotly.restyle("gdp-line", "text", [`GDP for ${countrySelected} for the years ${yearRangeVal}`])
-    });   
+    }); 
+    
+    create_emission_line_chart(countrySelected,yearRangeVal);
 }
 
 // function get_gdp_data(countryVal, yearRangeVal){
