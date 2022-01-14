@@ -1,3 +1,3 @@
 DB_USER="postgres"
-DB_KEY="ganesha123"
-DB_NAME="fossil_fuel"
+DB_KEY="420code"
+DB_NAME="project3db"

@@ -8,15 +8,6 @@ d3.json("http://127.0.0.1:5000/api/v1.0/Var").then((Consumption) => {
 });
 
 
-d3.json("http://127.0.0.1:5000/api/v1.0/countries2").then((countries2) => {
-
-    console.log(countries2)
-
-    countries2.forEach((country2) => {
-        d3.select("#selCountry2").append("option").text(country2);
-    });
-});
-
 d3.json("http://127.0.0.1:5000/api/v1.0/groupings").then((yearRanges) => {
 
     console.log(yearRanges)
@@ -42,7 +33,10 @@ function init(){
     let countryVal = "Algeria";
     let yearRangeVal = "1965-1975"
 
-    
+   // build the url for the api
+   url = `http://127.0.0.1:5000/api/v1.0/gdp/${countryVal}/${yearRangeVal}`
+
+
     // Create the GDP line chart
     create_gdp_line_chart(countryVal, yearRangeVal);
     create_emission_line_chart(countryVal, yearRangeVal);
@@ -50,10 +44,7 @@ function init(){
     create_allConsumption_line_chart(countryVal);
 }
 
-function create_gdp_line_chart(countryVal, yearRangeVal){
-
-    url = `http://127.0.0.1:5000/api/v1.0/gdp/${countryVal}/${yearRangeVal}`
-
+function create_gdp_line_chart(countryVal, yearRangeVal)
     //Make an api call to get the GDP for the selected country
    
     d3.json(url).then((gdp) => {
@@ -87,7 +78,7 @@ function create_gdp_line_chart(countryVal, yearRangeVal){
     Plotly.newPlot('gdp-line', data, layout);
 });
 
-}
+
 
 function create_emission_line_chart(countryVal, yearRangeVal){
 
@@ -278,6 +269,40 @@ function yearsOptionChanged(yearRangeVal){
     
     create_emission_line_chart(countrySelected,yearRangeVal);
   
+}
+
+url = `http://127.0.0.1:5000/api/v1.0/fuel_consumption/${countryVal}/${yearRangeVal}`
+d3.json(url).then((data)=>{
+    console.log(data)
+    create_consumption_bar_chart(data)
+})
+
+// Create the Fuel Consumption Bar Chart
+function create_consumption_bar_chart(data){
+    var trace1 = {
+        x: data[1],
+        y: data[0],
+        type: "bar",
+        ine : {
+            color: 'rgb(55,128,191)',
+            width: 2
+        }
+    }
+};
+
+var layout = {
+    // title:
+    title: 'Fuel Production',
+    width: 600,
+    xaxis: {
+        title: 'Fuel Type',
+        showgrid: false,
+        zeroline: false
+    },
+    yaxis: {
+        title: 'Year',
+        showline: false,
+    }
 }
 
 

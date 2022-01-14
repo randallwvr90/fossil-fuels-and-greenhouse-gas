@@ -1,4 +1,5 @@
 # flask imports
+from turtle import heading
 from flask import Flask, render_template,jsonify
 import psycopg2
 
@@ -108,22 +109,57 @@ def close_connection(conn):
 
 
 @app.route('/api/v1.0/consumption')
-def consumption():
-    title: str = 'Fossil Fuel Consumption by Country'
-    heading: str = 'Fossil Fuel Consumption by Country'
-    info: str = 'This is the consumption page.'
-    # TODO Is there a better way to structure this? Global variables?
-    # TODO convert all hardcoded page info to variables that can be stored here
-    content_1_title: str = 'Fossil Fuel Consumption'
-    content_1_location: str = '/api/v1.0/consumption'
-    content_2_title: str = 'CO2 Emissions'
-    content_2_location: str = '/api/v1.0/emissions'
-    return render_template(
-        "page1.html", title=title,
-        heading=heading, info=info,
-        content_1_title=content_1_title, content_1_location=content_1_location,
-        content_2_title=content_2_title, content_2_location=content_2_location
-    )
+
+# 
+# def consumption():
+#     title: str = 'Fossil Fuel Consumption by Country'
+#     heading: str = 'Fossil Fuel Consumption by Country'
+#     info: str = 'This is the consumption page.'
+#     # TODO Is there a better way to structure this? Global variables?
+#     # TODO convert all hardcoded page info to variables that can be stored here
+#     content_1_title: str = 'Fossil Fuel Consumption'
+#     content_1_location: str = '/api/v1.0/consumption'
+#     content_2_title: str = 'CO2 Emissions'
+#     content_2_location: str = '/api/v1.0/emissions'
+#     return render_template(
+#         "page1.html", title=title,
+#         heading=heading, info=info,
+#         content_1_title=content_1_title, content_1_location=content_1_location,
+#         content_2_title=content_2_title, content_2_location=content_2_location
+#     )
+# 
+
+
+# -------------------------------------------------------------------- #
+#                  Route - Fuel Consumption 
+# -------------------------------------------------------------------- #
+
+@app.route("/api/v1.0/fuel_consumption/<country>/<year>")
+def fuel_consumption(country, year):
+    """Return the justice league data as json"""
+    conn = open_connection()
+    years  = year.split('-')
+    fromYear = int(years[0])
+    toYear = int(years[1])
+    cursor  = conn.cursor()
+    # select year, fuel_type, production_value from fuel_production where country = (%s) and year between (%s) and (%s)
+    #cursor.execute("""Select fuel_type from fuel_consumption""")
+    #cursor.execute("""SELECT sum(consumption_value) as total, year FROM fuel_consumption WHERE country = 'Algeria' and year between 1965 and 1975 GROUP BY year""", (country, fromYear, toYear))
+    
+    cursor.execute("""Select sum(production_value) as  total, year from fuel_consumption where country = (%s) and year between (%s) and (%s)""")
+    # SELECT sum(consumption_value) as total, year FROM fuel_consumption WHERE country = 'Algeria' and year between 1965 and 1975 GROUP BY year;
+    results = cursor.fetchall()
+    print(results)
+    cursor.close()
+
+    close_connection(conn)
+    years=[]
+    gdpValue= []
+    returnValue = []
+    for result in results:
+        years.append(result[1])
+        gdpValue.append(result[0])
+    return jsonify(results)
 
 # -------------------------------------------------------------------- #
 #                  Route - Greenhouse Gas Emissions
