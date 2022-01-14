@@ -204,6 +204,11 @@ def emissions_map():
     )
 
 
+# -------------------------------------------------------------------- #
+#                      Route - get geojson
+# -------------------------------------------------------------------- #
+
+
 @app.route("/api/low_res_world")
 def low_res_world():
     geo_json_path = './static/data/low_res_world.geo.json'
@@ -213,6 +218,11 @@ def low_res_world():
     f.close()
     print(type(geo_json_dict))
     return jsonify(geo_json_dict)
+
+
+# -------------------------------------------------------------------- #
+#                      Route - get global emissions
+# -------------------------------------------------------------------- #
 
 
 @app.route("/api/v1.0/get_global_emissions")
@@ -228,7 +238,6 @@ def get_global_emissions():
 
     close_connection(conn)
     return jsonify(results)
-
 
 
 def main():
