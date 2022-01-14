@@ -238,16 +238,16 @@ def low_res_world():
 
 
 @app.route("/api/v1.0/get_global_emissions/<year>")
-def get_global_emissions(selectedYear):
+def get_global_emissions(year):
     """Get emissions data as json"""
     conn = open_connection()
     cursor = conn.cursor()
     cursor.execute(
-        """select  emission_value, country_id from co2_emission where year (%s)""", (selectedYear,)
+        """select  emission_value, country_id from co2_emission where year = (%s)""", (year,)
     )
     results = cursor.fetchall()
     cursor.close()
-
+    print(results);
     close_connection(conn)
     return jsonify(results)
 

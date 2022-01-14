@@ -10,34 +10,41 @@ function init() {
             d3.select("#selectYear").append("option").text(country);
         });
     });     
-    var myGeoJSONPath = '/api/low_res_world';
+
     
-    var emissionsJSONPath = get_url();
+
+    var myGeoJSONPath = '/api/low_res_world';
 
     $.getJSON(myGeoJSONPath,function(data){
         var map = L.map('map').setView([30, 0], 2);
         // Getting our GeoJSON data
-        d3.json(emissionsJSONPath).then(function(data2) {
-            // Creating a GeoJSON layer with the retrieved data
-            L.geoJson(data, {
-                style: function(feature) {
-                    return {
-                        color: "white",
-                        // Call the chooseColor() function to decide which color to color our neighborhood. (The color is based on the borough.)
-                        fillColor: chooseColor(data2, feature.properties.iso_n3),
-                        fillOpacity: 0.5,
-                        weight: 1.5
-                    };
-                },
-            }).addTo(map);
-        });
+        load_emissions(data, '2020', map)
     }); 
 
 }
 
-function get_url(){
-    url = '/api/v1.0/get_global_emissions/2020';
-    return url;
+function load_emissions(data, yr){
+    var emissionsJSONPath = `/api/v1.0/get_global_emissions/${yr}`;
+    d3.json(emissionsJSONPath).then(function(data2) {
+        // Creating a GeoJSON layer with the retrieved data
+        L.geoJson(data, {
+            style: function(feature) {
+                return {
+                    color: "white",
+                    // Call the chooseColor() function to decide which color to color our neighborhood. (The color is based on the borough.)
+                    fillColor: chooseColor(data2, feature.properties.iso_n3),
+                    fillOpacity: 0.5,
+                    weight: 1.5
+                };
+            },
+        }).addTo(map);
+    });
+    
+}
+
+
+function yearChanged(selYear){
+    load_emissions(data, selYear, map);
 }
 
 // The function that will determine the color of a neighborhood based on the borough that it belongs to
