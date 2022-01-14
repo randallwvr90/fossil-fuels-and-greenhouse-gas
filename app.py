@@ -12,7 +12,7 @@ from createDatabase import create_db
 # global variables for web routes
 # web route - any route function that uses "render_template"
 content_1_title: str = 'Map - Emissions by Country'
-content_1_location: str = '/api/v1.0/emissions_map'
+content_1_location: str = '/api/v1.0/emissions_map?year=2020'
 content_2_title: str = 'Consumption and Emissions by Country'
 content_2_location: str = '/api/v1.0/allYears'
 
@@ -202,6 +202,19 @@ def emissions_map():
         content_2_title=content_2_title, content_2_location=content_2_location
     )
 
+@app.route("/api/v1.0/getMappingYears")
+def get_years_for_map():
+    """Get emissions data as json"""
+    conn = open_connection()
+    cursor = conn.cursor()
+    cursor.execute(
+        """select distinct year from co2_emission order by year asc"""
+    )
+    results = cursor.fetchall()
+    cursor.close()
+
+    close_connection(conn)
+    return jsonify(results)
 
 # -------------------------------------------------------------------- #
 #                      Route - get geojson
@@ -224,17 +237,17 @@ def low_res_world():
 # -------------------------------------------------------------------- #
 
 
-@app.route("/api/v1.0/get_global_emissions")
-def get_global_emissions():
+@app.route("/api/v1.0/get_global_emissions/<year>")
+def get_global_emissions(year):
     """Get emissions data as json"""
     conn = open_connection()
     cursor = conn.cursor()
     cursor.execute(
-        """select  emission_value, country_id from co2_emission where year = 2020"""
+        """select  emission_value, country_id from co2_emission where year = (%s)""", (year,)
     )
     results = cursor.fetchall()
     cursor.close()
-
+    print(results);
     close_connection(conn)
     return jsonify(results)
 
