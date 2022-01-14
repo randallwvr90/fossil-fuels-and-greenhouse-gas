@@ -13,8 +13,8 @@ from createDatabase import create_db
 # web route - any route function that uses "render_template"
 content_1_title: str = 'Map - Emissions by Country'
 content_1_location: str = '/api/v1.0/emissions_map'
-content_2_title: str = ''
-content_2_location: str = ''
+content_2_title: str = 'Consumption and Emissions by Country'
+content_2_location: str = '/api/v1.0/allYears'
 
 
 # -------------------------------------------------------------------- #
@@ -253,7 +253,9 @@ def allYears():
     heading2: str = 'Pages:'
     return render_template(
         'allYears3.html',
-        heading=heading, heading2=heading2
+        heading=heading, heading2=heading2,
+        content_1_title=content_1_title, content_1_location=content_1_location,
+        content_2_title=content_2_title, content_2_location=content_2_location
     )
 
 
