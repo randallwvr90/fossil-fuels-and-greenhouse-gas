@@ -1,20 +1,12 @@
-d3.json("http://127.0.0.1:5000/api/v1.0/countries").then((countries) => {
+d3.json("http://127.0.0.1:5000/api/v1.0/Var").then((Consumption) => {
 
-    console.log(countries)
-
-    countries.forEach((country) => {
-        d3.select("#selCountry").append("option").text(country);
-    });
-});
-
-d3.json("http://127.0.0.1:5000/api/v1.0/fuel_consumption").then((fuel_consumption) => {
-
-    console.log(fuel_consumption)
+    console.log(Var);
 
     countries.forEach((country) => {
         d3.select("#selCountry").append("option").text(country);
     });
 });
+
 
 d3.json("http://127.0.0.1:5000/api/v1.0/countries2").then((countries2) => {
 
