@@ -4,8 +4,11 @@ import numpy as np
 
 def create_db(DB_USER,DB_KEY,DB_NAME):
     
+    # try some different filepaths...
+    # path: str = 'FinalDataFiles\\bp2021consolidateddataset.csv'
+    path: str = './FinalDataFiles/bp2021consolidateddataset.csv'
     #from postgres_key import DB_USER,DB_KEY,DB_NAME
-    bp_data=pd.read_csv('FinalDataFiles\\bp2021consolidateddataset.csv')
+    bp_data=pd.read_csv(path)
     #Create list of metrics that are to be used for analysis
     AnalysisMetrics=['biodiesel_cons_pj','biodiesel_prod_pj','biofuels_cons_ej','biofuels_prod_pj','co2_mtco2','coalcons_ej',
                 'coalprod_ej','ethanol_cons_pj','ethanol_prod_pj','gascons_ej','gasprod_ej','oilcons_ej','oilprod_kbd']
@@ -118,7 +121,10 @@ def create_db(DB_USER,DB_KEY,DB_NAME):
 
     
     #------------------------------Create GDP Dataset based on World Bank Data--------------------------------------------
-    wb_gdp=pd.read_csv('FinalDataFiles\\WorldBank_GDP.csv',skiprows=4)
+    # path variable: 
+    # gdp_path = 'FinalDataFiles\\WorldBank_GDP.csv'
+    gdp_path = './FinalDataFiles/WorldBank_GDP.csv'
+    wb_gdp=pd.read_csv(gdp_path, skiprows=4)
     #Convert GPD by year in Columns to Rows i.e Pivot data
     gdp=wb_gdp.melt(id_vars=['Country Name','Country Code','Indicator Name','Indicator Code'],var_name='Year',
             value_vars=[str(x) for x in np.arange(1960,2020)],value_name='GDP')
