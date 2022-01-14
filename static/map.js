@@ -9,42 +9,52 @@ function init() {
         countries.forEach((country) => {
             d3.select("#selectYear").append("option").text(country);
         });
-    });     
+    });    
+    var params = new URLSearchParams(window.location.search);
+    var year = params.get("year");
 
-    
+    console.log(year);
+    d3.select('#selectYear').node().value = year;
 
+    // let element = document.getElementById('#selectYear');
+    // element.value = year;
+
+    load_map(year);
+
+}
+
+function load_map(yr){
     var myGeoJSONPath = '/api/low_res_world';
+    
+    var emissionsJSONPath = `/api/v1.0/get_global_emissions/${yr}`;
+    console.log(emissionsJSONPath);
 
     $.getJSON(myGeoJSONPath,function(data){
         var map = L.map('map').setView([30, 0], 2);
         // Getting our GeoJSON data
-        load_emissions(data, '2020', map)
+        d3.json(emissionsJSONPath).then(function(data2) {
+            // Creating a GeoJSON layer with the retrieved data
+            L.geoJson(data, {
+                style: function(feature) {
+                    return {
+                        color: "white",
+                        // Call the chooseColor() function to decide which color to color our neighborhood. (The color is based on the borough.)
+                        fillColor: chooseColor(data2, feature.properties.iso_n3),
+                        fillOpacity: 0.5,
+                        weight: 1.5
+                    };
+                },
+            }).addTo(map);
+        });
     }); 
-
-}
-
-function load_emissions(data, yr){
-    var emissionsJSONPath = `/api/v1.0/get_global_emissions/${yr}`;
-    d3.json(emissionsJSONPath).then(function(data2) {
-        // Creating a GeoJSON layer with the retrieved data
-        L.geoJson(data, {
-            style: function(feature) {
-                return {
-                    color: "white",
-                    // Call the chooseColor() function to decide which color to color our neighborhood. (The color is based on the borough.)
-                    fillColor: chooseColor(data2, feature.properties.iso_n3),
-                    fillOpacity: 0.5,
-                    weight: 1.5
-                };
-            },
-        }).addTo(map);
-    });
-    
 }
 
 
 function yearChanged(selYear){
-    load_emissions(data, selYear, map);
+    var url = `/api/v1.0/emissions_map?year=${selYear}`;
+    location.href = url;
+    // document.getElementById('emissionsMap').innerHTML = "<div id='map' style='width: 100%; height: 100%;'></div>";
+    // load_map(selYear);
 }
 
 // The function that will determine the color of a neighborhood based on the borough that it belongs to

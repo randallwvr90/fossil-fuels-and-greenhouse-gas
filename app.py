@@ -12,7 +12,7 @@ from createDatabase import create_db
 # global variables for web routes
 # web route - any route function that uses "render_template"
 content_1_title: str = 'Map - Emissions by Country'
-content_1_location: str = '/api/v1.0/emissions_map'
+content_1_location: str = '/api/v1.0/emissions_map?year=2020'
 content_2_title: str = 'Consumption and Emissions by Country'
 content_2_location: str = '/api/v1.0/allYears'
 
