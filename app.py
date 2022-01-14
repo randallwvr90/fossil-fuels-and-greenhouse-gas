@@ -215,6 +215,22 @@ def low_res_world():
     return jsonify(geo_json_dict)
 
 
+@app.route("/api/v1.0/get_global_emissions")
+def get_global_emissions():
+    """Get emissions data as json"""
+    conn = open_connection()
+    cursor = conn.cursor()
+    cursor.execute(
+        """select  emission_value, country_id from co2_emission where year = 2020"""
+    )
+    results = cursor.fetchall()
+    cursor.close()
+
+    close_connection(conn)
+    return jsonify(results)
+
+
+
 def main():
     #----------Create DB------#
     print("Creating Database")
