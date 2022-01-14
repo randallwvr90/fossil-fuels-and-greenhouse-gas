@@ -9,6 +9,13 @@ import numpy as np
 from postgres_key import DB_USER, DB_KEY, DB_NAME
 from createDatabase import create_db
 
+# global variables for web routes
+# web route - any route function that uses "render_template"
+content_1_title: str = 'Map - Emissions by Country'
+content_1_location: str = '/api/v1.0/emissions_map'
+content_2_title: str = ''
+content_2_location: str = ''
+
 
 # -------------------------------------------------------------------- #
 #                             DB functions
@@ -45,15 +52,11 @@ def index():
     Greenhouse Gas Emission Dashboard
     '''
     #heading2: str = 'Pages:'
-    #content_1_title: str = 'Fossil Fuel Consumption'
-    #content_1_location: str = '/api/v1.0/consumption'
-    #content_2_title: str = 'CO2 Emissions'
-    #content_2_location: str = '/api/v1.0/emissions'
     return render_template(
         'index.html',
-        heading=heading
-        #content_1_title=content_1_title, content_1_location=content_1_location,
-        #content_2_title=content_2_title, content_2_location=content_2_location
+        heading=heading,
+        content_1_title=content_1_title, content_1_location=content_1_location,
+        content_2_title=content_2_title, content_2_location=content_2_location
     )
 
 
@@ -143,12 +146,6 @@ def consumption(country, year_range):
     title: str = 'Fossil Fuel Consumption by Country'
     heading: str = 'Fossil Fuel Consumption by Country'
     info: str = 'This is the consumption page.'
-    # TODO Is there a better way to structure this? Global variables?
-    # TODO convert all hardcoded page info to variables that can be stored here
-    content_1_title: str = 'Fossil Fuel Consumption'
-    content_1_location: str = '/api/v1.0/consumption'
-    content_2_title: str = 'CO2 Emissions'
-    content_2_location: str = '/api/v1.0/emissions'
     return render_template(
         "page1.html", title=title,
         heading=heading, info=info,
@@ -200,7 +197,9 @@ def emissions(country, year_range):
 @app.route("/api/v1.0/emissions_map")
 def emissions_map():
     return render_template(
-        'map_page.html'
+        'map_page.html',
+        content_1_title=content_1_title, content_1_location=content_1_location,
+        content_2_title=content_2_title, content_2_location=content_2_location
     )
 
 
