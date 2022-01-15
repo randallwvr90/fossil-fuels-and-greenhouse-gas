@@ -192,101 +192,60 @@ def emissions(country, year_range):
 #                  Route - Conusmptions Barchart
 # -------------------------------------------------------------------- #
 
-@app.route('/api/v1.0/consumptions/<country>/<year_range>')
-def consumptions(country, year_range):
-
+@app.route("/api/v1.0/fuel_cons/<country>/<year>")
+def fuel_cons(country, year):
     conn = open_connection()
-    cursor = conn.cursor()
-    cursor.execute(
-        """select case when fuel_type='biofuels_cons_ej' then 'Biofuel'
-            when fuel_type='ethanol_cons_ej' then 'Ethanol'
-            when fuel_type='biodiesel_cons_ej' then 'Biodiesel'
-            when fuel_type='coalcons_ej' then 'Coal'
-            when fuel_type='gascons_ej' then 'Gas'
-            when fuel_type='oilcons_ej' then 'Oil'
-            end fuel_type,sum(consumption_value) consumption_value from fuel_consumption  where country = (%s) and year_range=(%s) 
-            group by case when fuel_type='biofuels_cons_ej' then 'Biofuel'
-            when fuel_type='ethanol_cons_ej' then 'Ethanol'
-            when fuel_type='biodiesel_cons_ej' then 'Biodiesel'
-            when fuel_type='coalcons_ej' then 'Coal'
-            when fuel_type='gascons_ej' then 'Gas'
-            when fuel_type='oilcons_ej' then 'Oil'
-            end""",
-        (country, year_range)
-    )
-    results = cursor.fetchall()
-    # print(results)
-    cursor.close()
-    close_connection(conn)
+    years  = year.split('-')
 
-    #years = []
+    fromYear = int(years[0])
+    toYear = int(years[1])
+    cursor  = conn.cursor()
+   
+    cursor.execute(""" select sum(consumption_value), year from fuel_consumption where country = (%s) and year between (%s) and (%s) group by year """, (country, fromYear, toYear))
+    results = cursor.fetchall()
+    cursor.close()
+
+    close_connection(conn)
+    years = []
     consumptionValue = []
-    fuel_types=[]
     returnValue = []
-
-    # Loop through the result to seperate the year and the gdp value
     for result in results:
-        #years.append(result[0])
-        consumptionValue.append(result[1])
-        fuel_types.append(result[0])
+        years.append(result[1])
+        consumptionValue.append(result[0])
 
-    #returnValue.append(years)
-    returnValue.append(fuel_types)
+    returnValue.append(years)
     returnValue.append(consumptionValue)
-    
-
-    # print(returnValue)
-    return jsonify(returnValue)
+    print(returnValue)
+    return jsonify(returnValue) 
 
 # -------------------------------------------------------------------- #
-#                  Route - Production Barchart
+#                  Route - Fuel Production
 # -------------------------------------------------------------------- #
-
-@app.route('/api/v1.0/production/<country>/<year_range>')
-def production(country, year_range):
-
+@app.route("/api/v1.0/production/<country>/<year>")
+def production(country, year):
     conn = open_connection()
-    cursor = conn.cursor()
-    cursor.execute(
-        """select case when fuel_type='biofuels_prod_ej' then 'Biofuel'
-            when fuel_type='ethanol_prod_ej' then 'Ethanol'
-            when fuel_type='biodiesel_prod_ej' then 'Biodiesel'
-            when fuel_type='coalprod_ej' then 'Coal'
-            when fuel_type='gasprod_ej' then 'Gas'
-            when fuel_type='oilprod_ej' then 'Oil'
-            end fuel_type,sum(production_value) production_value from fuel_production  where country = (%s) and year_range=(%s) 
-            group by case when fuel_type='biofuels_prod_ej' then 'Biofuel'
-            when fuel_type='ethanol_prod_ej' then 'Ethanol'
-            when fuel_type='biodiesel_prod_ej' then 'Biodiesel'
-            when fuel_type='coalprod_ej' then 'Coal'
-            when fuel_type='gasprod_ej' then 'Gas'
-            when fuel_type='oilprod_ej' then 'Oil'
-            end""",
-        (country, year_range)
-    )
+    years  = year.split('-')
+
+    fromYear = int(years[0])
+    toYear = int(years[1])
+    cursor  = conn.cursor()
+   
+    cursor.execute(""" select sum(production_value), year from fuel_production where country = (%s) and year between (%s) and (%s) group by year """, (country, fromYear, toYear))
     results = cursor.fetchall()
-    # print(results)
     cursor.close()
+
     close_connection(conn)
-
-    #years = []
+    years = []
     productionValue = []
-    fuel_types=[]
     returnValue = []
-
-    # Loop through the result to seperate the year and the gdp value
     for result in results:
-        #years.append(result[0])
-        productionValue.append(result[1])
-        fuel_types.append(result[0])
+        years.append(result[1])
+        productionValue.append(result[0])
 
-    #returnValue.append(years)
-    returnValue.append(fuel_types)
+    returnValue.append(years)
     returnValue.append(productionValue)
-    
-
-    # print(returnValue)
-    return jsonify(returnValue)
+    print(returnValue)
+    return jsonify(returnValue) 
 
 
 # -------------------------------------------------------------------- #
