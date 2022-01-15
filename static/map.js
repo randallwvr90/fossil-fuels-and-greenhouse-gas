@@ -45,9 +45,42 @@ function load_map(yr){
                     };
                 },
             }).addTo(map);
+            // add the legend to the map
+            let legend  = L.control({
+                position: "bottomright"
+
+            });
+            
+            // add the properties for the legend
+            legend.onAdd = function(){
+                // make a div for the legend
+                let div = L.DomUtil.create('div', 'info legend');
+
+                // set up the intervals
+                let intervals = [0, 50, 100, 200, 300, 400, 500, 1000, 2000, 5000];
+                // set the colors for the intervals
+                let colors = ["#0008FA", "#00CCFA", "#00FACC", "#00FA0C", "#ABFA00", "#FAED00", "#FAB700", "#FA6800", "#FC0303", "#A60202"];
+
+                // loop through the intervals and colors and generate a label with a colored square for each interval
+                for (var i = 0; i < intervals.length; i++){
+                    // Use innner html to set the quare for each interval and label
+
+                    div.innerHTML += "<li style=background:"
+                            + colors[i] 
+                            + "></li>"
+                            + intervals[i]
+                            + (intervals[i+1] ? "MT &ndash;" + intervals[i+1] + "MT" + "<br>" : "+");
+                }
+
+                return div;
+            };
+
+            legend.addTo(map);
         });
     }); 
 }
+
+
 
 
 function yearChanged(selYear){
@@ -60,15 +93,15 @@ function yearChanged(selYear){
 // The function that will determine the color of a neighborhood based on the borough that it belongs to
 function chooseColor(data2, countryCode) {
     emissions = getEmissions(data2, countryCode);
-    if (emissions > 5000) return "#a60202";
-    else if (emissions > 4000) return "#FC0303";
-    else if (emissions > 3500) return "#FA6800";
-    else if (emissions > 3000) return "#FAB700";
-    else if (emissions > 2500) return "#FAED00";
-    else if (emissions > 2000) return "#ABFA00";
-    else if (emissions > 1500) return "#00FA0C";
-    else if (emissions > 1000) return "#00FACC";
-    else if (emissions > 500) return "#00CCFA";
+    if (emissions > 5000) return "#A60202";
+    else if (emissions > 2000) return "#FC0303";
+    else if (emissions > 1000) return "#FA6800";
+    else if (emissions > 500) return "#FAB700";
+    else if (emissions > 400) return "#FAED00";
+    else if (emissions > 300) return "#ABFA00";
+    else if (emissions > 200) return "#00FA0C";
+    else if (emissions > 100) return "#00FACC";
+    else if (emissions > 50) return "#00CCFA";
     else if (emissions >= 0) return "#0008fa";
     else return "white";
 }
@@ -79,3 +112,4 @@ function getEmissions(data2, countryCode) {
         }
     }
 }
+
