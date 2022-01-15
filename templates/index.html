@@ -42,28 +42,30 @@
         </div>
     -->
 
-    <div class="row">
+    <div class="row p-3 mb-2 bg-primary text-white">
         <div class="col-md-12 jumbotron text-center">
           <h1>Fuel Consumption and Production Impact</h1>
           <p>Use the interactive charts below to explore the dataset</p>
         </div>
       </div>
+      <br><hr>
       <div class="row">
         <div class="col-md-6">
           <div class="well">
-            <h5>Select Country:</h5>
+            <h5><b>Select Country:</b></h5>
             <select id="selCountry" onchange="countryOptionChanged(this.value)"></select>
           </div>
           
         </div>
         <div class="col-md-6">
             <div class="well">
-              <h5>Select Years:</h5>
+              <h5><b>Select Years:</b></h5>
               <select id="selYear" onchange="yearsOptionChanged(this.value)"></select>
             </div> 
         </div> 
       </div>
-      <div class="row">
+      <br><hr>
+      <div class="row p-3 mb-2 bg-secondary text-white">
         <div class="col-md-6">
             <div id="fuel-prod-bar"></div>
         </div>
@@ -71,7 +73,7 @@
             <div id="fuel-cons-bar"></div>
         </div>
       </div>
-      <div class="row">
+      <div class="row p-3 mb-2 bg-secondary text-white">
         <div class="col-md-6">
             <div id="gdp-line"></div>
         </div>

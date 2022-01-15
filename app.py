@@ -188,6 +188,106 @@ def emissions(country, year_range):
     # print(returnValue)
     return jsonify(returnValue)
 
+# -------------------------------------------------------------------- #
+#                  Route - Conusmptions Barchart
+# -------------------------------------------------------------------- #
+
+@app.route('/api/v1.0/consumptions/<country>/<year_range>')
+def consumptions(country, year_range):
+
+    conn = open_connection()
+    cursor = conn.cursor()
+    cursor.execute(
+        """select case when fuel_type='biofuels_cons_ej' then 'Biofuel'
+            when fuel_type='ethanol_cons_ej' then 'Ethanol'
+            when fuel_type='biodiesel_cons_ej' then 'Biodiesel'
+            when fuel_type='coalcons_ej' then 'Coal'
+            when fuel_type='gascons_ej' then 'Gas'
+            when fuel_type='oilcons_ej' then 'Oil'
+            end fuel_type,sum(consumption_value) consumption_value from fuel_consumption  where country = (%s) and year_range=(%s) 
+            group by case when fuel_type='biofuels_cons_ej' then 'Biofuel'
+            when fuel_type='ethanol_cons_ej' then 'Ethanol'
+            when fuel_type='biodiesel_cons_ej' then 'Biodiesel'
+            when fuel_type='coalcons_ej' then 'Coal'
+            when fuel_type='gascons_ej' then 'Gas'
+            when fuel_type='oilcons_ej' then 'Oil'
+            end""",
+        (country, year_range)
+    )
+    results = cursor.fetchall()
+    # print(results)
+    cursor.close()
+    close_connection(conn)
+
+    #years = []
+    consumptionValue = []
+    fuel_types=[]
+    returnValue = []
+
+    # Loop through the result to seperate the year and the gdp value
+    for result in results:
+        #years.append(result[0])
+        consumptionValue.append(result[1])
+        fuel_types.append(result[0])
+
+    #returnValue.append(years)
+    returnValue.append(fuel_types)
+    returnValue.append(consumptionValue)
+    
+
+    # print(returnValue)
+    return jsonify(returnValue)
+
+# -------------------------------------------------------------------- #
+#                  Route - Production Barchart
+# -------------------------------------------------------------------- #
+
+@app.route('/api/v1.0/production/<country>/<year_range>')
+def production(country, year_range):
+
+    conn = open_connection()
+    cursor = conn.cursor()
+    cursor.execute(
+        """select case when fuel_type='biofuels_prod_ej' then 'Biofuel'
+            when fuel_type='ethanol_prod_ej' then 'Ethanol'
+            when fuel_type='biodiesel_prod_ej' then 'Biodiesel'
+            when fuel_type='coalprod_ej' then 'Coal'
+            when fuel_type='gasprod_ej' then 'Gas'
+            when fuel_type='oilprod_ej' then 'Oil'
+            end fuel_type,sum(production_value) production_value from fuel_production  where country = (%s) and year_range=(%s) 
+            group by case when fuel_type='biofuels_prod_ej' then 'Biofuel'
+            when fuel_type='ethanol_prod_ej' then 'Ethanol'
+            when fuel_type='biodiesel_prod_ej' then 'Biodiesel'
+            when fuel_type='coalprod_ej' then 'Coal'
+            when fuel_type='gasprod_ej' then 'Gas'
+            when fuel_type='oilprod_ej' then 'Oil'
+            end""",
+        (country, year_range)
+    )
+    results = cursor.fetchall()
+    # print(results)
+    cursor.close()
+    close_connection(conn)
+
+    #years = []
+    productionValue = []
+    fuel_types=[]
+    returnValue = []
+
+    # Loop through the result to seperate the year and the gdp value
+    for result in results:
+        #years.append(result[0])
+        productionValue.append(result[1])
+        fuel_types.append(result[0])
+
+    #returnValue.append(years)
+    returnValue.append(fuel_types)
+    returnValue.append(productionValue)
+    
+
+    # print(returnValue)
+    return jsonify(returnValue)
+
 
 # -------------------------------------------------------------------- #
 #                      Route - emissions map
@@ -409,7 +509,7 @@ def main():
     create_db(DB_USER, DB_KEY, DB_NAME)
     print("Database Created")
     '''Run the Flask app.'''
-    app.run(debug=True)
+    app.run(debug=False)
 
 
 if __name__ == "__main__":
