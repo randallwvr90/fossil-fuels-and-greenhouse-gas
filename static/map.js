@@ -65,9 +65,9 @@ function load_map(yr){
                 for (var i = 0; i < intervals.length; i++){
                     // Use innner html to set the quare for each interval and label
 
-                    div.innerHTML += "<i style=background:"
+                    div.innerHTML += "<li style=background:"
                             + colors[i] 
-                            + "></i>"
+                            + "></li>"
                             + intervals[i]
                             + (intervals[i+1] ? "&ndash;" + intervals[i+1] + "<br>" : "+");
                 }
