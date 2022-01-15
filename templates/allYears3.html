@@ -14,7 +14,7 @@
     <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
         <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
         <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
-        <span class="fs-4">Fossil Fuels Impact Project</span>
+        <span class="fs-4"><b>Fossil Fuels Impact Project</b></span>
         </a>
 
         <ul class="nav nav-pills">
@@ -25,26 +25,28 @@
         </ul>
     </header>
 
-    <div class="row">
+    <div class="row  p-3 mb-2 bg-primary text-white">
         <div class="col-md-12 jumbotron text-center">
           <h1>Fuel Consumption and Emissions Since 1965</h1>
         </div>
       </div>
+      <br><hr>
       <div class="row">
         <div class="col-md-6">
           <div class="well">
-            <h5>Select Country:</h5>
+            <h5><b>Select Country:</b></h5>
             <select id="selCountry2" onchange="countryOptionChanged2(this.value)"></select>
           </div>
           
         </div>
       </div>
-      <div class="row">
+      <br><hr>
+      <div class="row  p-3 mb-2 bg-secondary text-white">
         <div class="col-md-12">
           <div id="allConsumption-line"></div>
         </div>
       </div>
-      <div class="row">     
+      <div class="row  p-3 mb-2 bg-secondary text-white">     
         <div class="col-md-12">
           <div id="allEmissions-line"></div>
         </div>

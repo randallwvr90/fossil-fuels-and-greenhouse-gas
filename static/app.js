@@ -47,6 +47,8 @@ function init(){
     create_emission_line_chart(countryVal, yearRangeVal);
     create_allEmissions_line_chart(countryVal);
     create_allConsumption_line_chart(countryVal);
+    create_consumption_bar_chart(countryVal, yearRangeVal);
+    create_production_bar_chart(countryVal, yearRangeVal);
 }
 
 function create_gdp_line_chart(countryVal, yearRangeVal){
@@ -123,6 +125,73 @@ function create_emission_line_chart(countryVal, yearRangeVal){
     };
     
     Plotly.newPlot('co2-line', data, layout);
+});
+
+}
+
+function create_consumption_bar_chart(countryVal, yearRangeVal){
+
+    url = `http://127.0.0.1:5000/api/v1.0/consumptions/${countryVal}/${yearRangeVal}`
+
+    //Make an api call to get the GDP for the selected country
+   
+    d3.json(url).then((consumption) => {
+        //console.log(consumption)
+        //barcolor=['#a86632','#a88332','#a8a232','#FAED00','#00FACC','#FA6800']
+    var trace1 = {
+        x: consumption[0],
+        y: consumption[1],
+        //orientation: 'h',
+        /*marker :{
+            color:['#a86632','#a88332','#a8a232','#FAED00','#00FACC','#FA6800']
+        },*/
+        type: 'bar',
+            };
+    
+    var data = [trace1];
+
+    var layout = {
+        // title: `Emission for ${countryVal} for the years ${yearRangeVal}`,
+        title: `Fuel Consumption over 10 year period`,
+        //width: 600,
+        yaxis:{title:'Exajoules'}
+       };
+    
+    Plotly.newPlot('fuel-cons-bar', data, layout);
+});
+
+}
+
+
+function create_production_bar_chart(countryVal, yearRangeVal){
+
+    url = `http://127.0.0.1:5000/api/v1.0/production/${countryVal}/${yearRangeVal}`
+
+    //Make an api call to get the GDP for the selected country
+   
+    d3.json(url).then((production) => {
+        //console.log(consumption)
+        //barcolor=['#a86632','#a88332','#a8a232','#FAED00','#00FACC','#FA6800']
+    var trace1 = {
+        x: production[0],
+        y: production[1],
+        //orientation: 'h',
+        /*marker :{
+            color:['#a86632','#a88332','#a8a232','#FAED00','#00FACC','#FA6800']
+        },*/
+        type: 'bar',
+            };
+    
+    var data = [trace1];
+
+    var layout = {
+        // title: `Emission for ${countryVal} for the years ${yearRangeVal}`,
+        title: `Fuel Production over 10 year period`,
+        //width: 600,
+        yaxis:{title:'Exajoules'}
+       };
+    
+    Plotly.newPlot('fuel-prod-bar', data, layout);
 });
 
 }
@@ -258,7 +327,9 @@ function countryOptionChanged(countrySelected){
         Plotly.restyle("gdp-line", "text", [`GDP for ${countrySelected} for the years ${yearRangeVal}`])
     });   
 
-    create_emission_line_chart(countrySelected);  
+    create_emission_line_chart(countrySelected,yearRangeVal);
+    create_consumption_bar_chart(countrySelected,yearRangeVal);
+    create_production_bar_chart(countrySelected,yearRangeVal);
 }
 
 function countryOptionChanged2(countrySelected2){
@@ -280,6 +351,8 @@ function yearsOptionChanged(yearRangeVal){
     }); 
     
     create_emission_line_chart(countrySelected,yearRangeVal);
+    create_consumption_bar_chart(countrySelected,yearRangeVal);
+    create_production_bar_chart(countrySelected,yearRangeVal);
   
 }
 
