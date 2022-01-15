@@ -148,7 +148,9 @@ function create_allEmissions_line_chart(countryVal){
 
     var layout = {
         title: `Emissions for ${countryVal} since 1965`,
-        width: 600,
+        autosize: false,
+        width: 1200,
+        height: 400,
         xaxis: {
             title: 'Year',
             showgrid: false,
@@ -224,7 +226,9 @@ function create_allConsumption_line_chart(countryVal){
 
     var layout = {
         title: `Consumption for ${countryVal} since 1965`,
-        width: 600,
+        autosize: false,
+        width: 1200,
+        height: 400,       
         xaxis: {
             title: 'Year',
             showgrid: false,

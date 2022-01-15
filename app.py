@@ -9,6 +9,13 @@ import numpy as np
 from postgres_key import DB_USER, DB_KEY, DB_NAME
 from createDatabase import create_db
 
+# global variables for web routes
+# web route - any route function that uses "render_template"
+content_1_title: str = 'Map - Emissions by Country'
+content_1_location: str = '/api/v1.0/emissions_map?year=2020'
+content_2_title: str = 'Consumption and Emissions by Country'
+content_2_location: str = '/api/v1.0/allYears'
+
 
 # -------------------------------------------------------------------- #
 #                             DB functions
@@ -45,15 +52,11 @@ def index():
     Greenhouse Gas Emission Dashboard
     '''
     #heading2: str = 'Pages:'
-    #content_1_title: str = 'Fossil Fuel Consumption'
-    #content_1_location: str = '/api/v1.0/consumption'
-    #content_2_title: str = 'CO2 Emissions'
-    #content_2_location: str = '/api/v1.0/emissions'
     return render_template(
         'index.html',
-        heading=heading
-        #content_1_title=content_1_title, content_1_location=content_1_location,
-        #content_2_title=content_2_title, content_2_location=content_2_location
+        heading=heading,
+        content_1_title=content_1_title, content_1_location=content_1_location,
+        content_2_title=content_2_title, content_2_location=content_2_location
     )
 
 
@@ -143,12 +146,6 @@ def consumption(country, year_range):
     title: str = 'Fossil Fuel Consumption by Country'
     heading: str = 'Fossil Fuel Consumption by Country'
     info: str = 'This is the consumption page.'
-    # TODO Is there a better way to structure this? Global variables?
-    # TODO convert all hardcoded page info to variables that can be stored here
-    content_1_title: str = 'Fossil Fuel Consumption'
-    content_1_location: str = '/api/v1.0/consumption'
-    content_2_title: str = 'CO2 Emissions'
-    content_2_location: str = '/api/v1.0/emissions'
     return render_template(
         "page1.html", title=title,
         heading=heading, info=info,
@@ -200,9 +197,24 @@ def emissions(country, year_range):
 @app.route("/api/v1.0/emissions_map")
 def emissions_map():
     return render_template(
-        'map_page.html'
+        'map_page.html',
+        content_1_title=content_1_title, content_1_location=content_1_location,
+        content_2_title=content_2_title, content_2_location=content_2_location
     )
 
+@app.route("/api/v1.0/getMappingYears")
+def get_years_for_map():
+    """Get emissions data as json"""
+    conn = open_connection()
+    cursor = conn.cursor()
+    cursor.execute(
+        """select distinct year from co2_emission order by year asc"""
+    )
+    results = cursor.fetchall()
+    cursor.close()
+
+    close_connection(conn)
+    return jsonify(results)
 
 # -------------------------------------------------------------------- #
 #                      Route - get geojson
@@ -225,19 +237,170 @@ def low_res_world():
 # -------------------------------------------------------------------- #
 
 
-@app.route("/api/v1.0/get_global_emissions")
-def get_global_emissions():
+@app.route("/api/v1.0/get_global_emissions/<year>")
+def get_global_emissions(year):
     """Get emissions data as json"""
     conn = open_connection()
     cursor = conn.cursor()
     cursor.execute(
-        """select  emission_value, country_id from co2_emission where year = 2020"""
+        """select  emission_value, country_id from co2_emission where year = (%s)""", (year,)
     )
+    results = cursor.fetchall()
+    cursor.close()
+    print(results);
+    close_connection(conn)
+    return jsonify(results)
+
+# -------------------------------------------------------------------- #
+#                           Route - allYears
+# -------------------------------------------------------------------- #
+
+
+@app.route('/api/v1.0/allYears')
+def allYears():
+
+    heading: str = '''
+    Fossil Fuel Consumption and 
+    Greenhouse Gas Emission Dashboard
+    '''
+    heading2: str = 'Pages:'
+    return render_template(
+        'allYears3.html',
+        heading=heading, heading2=heading2,
+        content_1_title=content_1_title, content_1_location=content_1_location,
+        content_2_title=content_2_title, content_2_location=content_2_location
+    )
+
+
+# -------------------------------------------------------------------- #
+#                           Route - "countries2"
+# -------------------------------------------------------------------- #
+
+
+@app.route("/api/v1.0/countries2")
+def get_countries2():
+    """Return Countries data as json"""
+    conn = open_connection()
+    cursor = conn.cursor()
+    cursor.execute("""Select country from country_master order by 1""")
     results = cursor.fetchall()
     cursor.close()
 
     close_connection(conn)
     return jsonify(results)
+
+
+# -------------------------------------------------------------------- #
+#                 Route - "allYears/emissions/<country>"
+# -------------------------------------------------------------------- #
+
+
+@app.route("/api/v1.0/allYears/emissions/<country>")
+def get_allEmissions(country):
+
+    conn = open_connection()
+    cursor = conn.cursor()
+    cursor.execute(
+        """select year, emission_value from co2_emission where country = (%s) """, (country,))
+    results = cursor.fetchall()
+    cursor.close()
+    close_connection(conn)
+
+    years = []
+    co2 = []
+    returnValue = []
+    for result in results:
+        years.append(result[0])
+        co2.append(result[1])
+
+    returnValue.append(years)
+    returnValue.append(co2)
+
+    return jsonify(returnValue)
+
+
+# -------------------------------------------------------------------- #
+#                 Route - "allYears/consumption/<country>"
+# -------------------------------------------------------------------- #
+
+
+@app.route("/api/v1.0/allYears/consumption/<country>")
+def get_Consumption(country):
+
+    conn = open_connection()
+    cursor = conn.cursor()
+    cursor.execute(
+        """select year, consumption_value from fuel_consumption where country = (%s) and fuel_type = 'oilcons_ej' """, (country,))
+    results1 = cursor.fetchall()
+    cursor.execute(
+        """select year, consumption_value from fuel_consumption where country = (%s) and fuel_type = 'gascons_ej' """, (country,))
+    results2 = cursor.fetchall()
+    cursor.execute(
+        """select year, consumption_value from fuel_consumption where country = (%s) and fuel_type = 'coalcons_ej' """, (country,))
+    results3 = cursor.fetchall()
+    cursor.execute(
+        """select year, consumption_value from fuel_consumption where country = (%s) and fuel_type = 'ethanol_cons_ej' """, (country,))
+    results4 = cursor.fetchall()
+    cursor.execute(
+        """select year, consumption_value from fuel_consumption where country = (%s) and fuel_type = 'biofuels_cons_ej' """, (country,))
+    results5 = cursor.fetchall()
+    cursor.execute(
+        """select year, consumption_value from fuel_consumption where country = (%s) and fuel_type = 'biodiesel_cons_ej' """, (country,))
+    results6 = cursor.fetchall()
+    cursor.close()
+    close_connection(conn)
+
+    years1 = []
+    fuel1 = []
+    for result in results1:
+        years1.append(result[0])
+        fuel1.append(result[1])
+
+    years2 = []
+    fuel2 = []
+    for result in results2:
+        years2.append(result[0])
+        fuel2.append(result[1])
+
+    years3 = []
+    fuel3 = []
+    for result in results3:
+        years3.append(result[0])
+        fuel3.append(result[1])
+
+    years4 = []
+    fuel4 = []
+    for result in results4:
+        years4.append(result[0])
+        fuel4.append(result[1])
+
+    years5 = []
+    fuel5 = []
+    for result in results5:
+        years5.append(result[0])
+        fuel5.append(result[1])
+
+    years6 = []
+    fuel6 = []
+    for result in results6:
+        years6.append(result[0])
+        fuel6.append(result[1])
+
+    returnValue = []
+    returnValue.append(years1)
+    returnValue.append(fuel1)
+    returnValue.append(years2)
+    returnValue.append(fuel2)
+    returnValue.append(years3)
+    returnValue.append(fuel3)
+    returnValue.append(years4)
+    returnValue.append(fuel4)
+    returnValue.append(years5)
+    returnValue.append(fuel5)
+    returnValue.append(years6)
+    returnValue.append(fuel6)
+
+    return jsonify(returnValue)
 
 
 def main():
