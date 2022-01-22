@@ -12,6 +12,7 @@ project_rubric.png
 
 #DB Password file
 postgres_key.py
+my_postgres_key.py
 
 # python stuff from github's python .gitignore template
 # https://github.com/github/gitignore/blob/main/Python.gitignore
