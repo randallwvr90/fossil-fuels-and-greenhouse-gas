@@ -2,6 +2,9 @@
 .DS_Store
 **/.DS_Store
 
+# MS office stuff:
+~$data_sources.xlsx
+
 # Randy's stuff:
 ooptest.py
 .vscode/
