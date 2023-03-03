@@ -9,10 +9,6 @@
 ooptest.py
 .vscode/
 
-# project-specific
-project_requirements.png
-project_rubric.png
-
 #DB Password file
 postgres_key.py
 my_postgres_key.py
