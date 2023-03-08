@@ -7,7 +7,6 @@ import pandas as pd
 import numpy as np
 
 from postgres_key import DB_USER, DB_KEY, DB_NAME
-from createDatabase import create_db
 
 # global variables for web routes
 # web route - any route function that uses "render_template"
