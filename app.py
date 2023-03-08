@@ -463,10 +463,6 @@ def get_Consumption(country):
 
 
 def main():
-    #----------Create DB------#
-    print("Creating Database")
-    create_db(DB_USER, DB_KEY, DB_NAME)
-    print("Database Created")
     '''Run the Flask app.'''
     app.run(debug=False)
 
