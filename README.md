@@ -14,6 +14,22 @@ Study of interaction between consumption of fuel across the world and its relati
 
 
 ## Data Sources
+### Possible New Sources
+#### Conflict / War
+* Uppsala Conflict Data Program
+  * API: https://ucdp.uu.se/apidocs/
+  * UCDP/PRIO Armed Conflict Dataset - at least one state actor
+  * UCDP/PRIO Dyadic Dataset - IDK...
+  * UCDP NonState Conflict Dataset - nonstate
+  * UCDP One-sided Violence Dataset - govts or organized groups on civilians
+  * UCDP Battle-Related Deaths Dataset - number of deaths in conflicts appearing in UCDP/PRIO Armed Conflict Dataset
+* GDELT (access with BigQuery or download CSV)
+  * https://www.gdeltproject.org/
+  * "GDELT provides the ultimate mappable database of global conflict translating the world’s textual news reports into quantitative spreadsheet entries each geocoded to the level of a specific city or landmark worldwide."
+  * IDK how reliable this is - research further
+## Current Sources
+* IEA energy data
+  * International Energy Administration, collects global energy data by country, region, and energy source
 * Scripps CO2 Program - AKA The Keeling Curve
   * https://scrippsco2.ucsd.edu/data/atmospheric_co2/mlo.html
   * Atmospheric CO2 measurements
