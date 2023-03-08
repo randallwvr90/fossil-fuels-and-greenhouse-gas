@@ -30,8 +30,8 @@ init();
 function init(){
     
     // Set default values on inital load
-    let countryVal = "Algeria";
-    let yearRangeVal = "1965-1975"
+    let countryVal = "US";
+    let yearRangeVal = "2005-2015"
 
     
     // Create the GDP line chart
